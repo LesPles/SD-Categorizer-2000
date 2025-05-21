@@ -1,63 +1,93 @@
-This is a basic Python 3 script generated in ChatGPT to organise your image dump folders and export the WebUI generation parameters if found.
+# SD-Cat2000
 
-The script will organise into these four top level folders:
+A basic Python 3 script (originally prototyped in Bash) designed to organize image dump folders and export generation parameters (metadata) from **Stable Diffusion** image files — specifically those generated with **WebUI** or **ComfyUI**.
 
-- ComfyUI: Containing any files generated using ComfyUI
-- WebUI: Containing any files generated using WebUI, broken down by a category of your choosing, e.g. by Model.  A text file containing the generation parameters is included for ease of reading.
-- No <category found>: Containing any files that have metadata that is unknown, incomplete or just doesn't contain the category of your choosing.  A text file containing whatever metadata can be found.
-- No metadata: Containing any other files that do not contain any metadata, broken down by file extension
+## 📁 Folder Structure
 
-For the WebUI categories, it supports 'Model', 'Model hash', 'Size', 'Sampler' & 'CFG scale'.
+The script organizes files into the following **top-level folders**:
+
+- **ComfyUI/**  
+  Files generated using **ComfyUI** (identified by metadata).
+
+- **WebUI/**  
+  Files generated using **WebUI**, organized into subfolders based on a **category of your choosing** (e.g., Model, Sampler).  
+  A `.txt` file is created for each image with readable generation parameters.
+
+- **No \<category\> found/**  
+  Files that include metadata, but **lack the category** you've specified.  
+  The text file contains the raw metadata as-is.
+
+- **No metadata/**  
+  Files that **do not contain any embedded EXIF metadata**.  
+  These are further organized by **file extension** (e.g. PNG, JPG, MP4).
+
+## 🏷 Supported WebUI Categories
+
+The following categories are supported for classifying WebUI images:
+
+- `Model`
+- `Model hash`
+- `Size`
+- `Sampler`
+- `CFG scale`
+
+## 🧰 Usage
+
+```
+python3 sd-cat2000.py -<flag> [-v] <file(s) or folder(s)>
+```
+
+Where `<flag>` is ONE of the following:
+- `-m = Checkpoint Model`
+- `-h = Checkpoint Model hash`
+- `-d = Image Dimension`
+- `-a = Sampler`
+- `-c = CFG scale`
+
+Optional:
+-v — Verbose mode, prints detailed output for each file processed.
+Without -v, a progress percentage is shown instead.
 
 
-----
+## 💡 Example
 
-Usage: sd-cat2000.py -<flag> [-v] <file(s) or folder(s)>
-
-Where <flag> is ONE of the following:
-
--m Model
--h Model hash
--d Size
--a Sampler
--c CFG scale
-
-Optionally add -v for verbose output to show details of each file being processed.
-
-Without the -v, you will see a simple percentage progress only.
-
-----
-
-Example usage:
-
+```bash
 ./sd-cat2000.py -m -v ImageDownloads/
+```
+This processes all files in the ImageDownloads/ folder and classifies WebUI images based on the Model.
 
+Resulting Folder Layout:
 
-This will execute the script, process all files in your ImageDownloads folder and break down the WebUI images based on the SD Model, e.g.:
+```
+ImageDownloads/
+├── ComfyUI/
+│   ├── ComfyUI00001.png
+│   └── ComfyUI00002.png
+├── No metadata/
+│   ├── JPEG/
+│   ├── JPG/
+│   ├── PNG/
+│   └── MP4/
+├── No model found/
+│   ├── 00005.png
+│   └── 00005.png.txt
+├── WebUI/
+│   ├── cyberillustrious_v38/
+│   │   ├── 00001.png
+│   │   ├── 00001.png.txt
+│   │   └── 00002.png
+│   └── waiNSFWIllustrious_v120/
+│       ├── 00003.png
+│       ├── 00003.png.txt
+│       └── 00004.png
+```
 
-ImageDownloads/ComfyUI/ComfyUI00001.png
-ImageDownloads/ComfyUI/ComfyUI00002.png
-ImageDownloads/No metadata/JPEG/00006.jpeg
-ImageDownloads/No metadata/JPG/00007.jpg
-ImageDownloads/No metadata/MP4/00008.mp4
-ImageDownloads/No metadata/PNG/00009.png
-ImageDownloads/No metadata/UNKNOWN/
-ImageDownloads/No model found/00005.png
-ImageDownloads/No model found/00005.png.txt
-ImageDownloads/WebUI/cyberillustrious_v38/00001.png
-ImageDownloads/WebUI/cyberillustrious_v38/00001.png.txt
-ImageDownloads/WebUI/cyberillustrious_v38/00002.png
-ImageDownloads/WebUI/cyberillustrious_v38/00002.png.txt
-ImageDownloads/WebUI/waiNSFWIllustrious_v120/00003.png
-ImageDownloads/WebUI/waiNSFWIllustrious_v120/00003.png.txt
-ImageDownloads/WebUI/waiNSFWIllustrious_v120/00004.png
-ImageDownloads/WebUI/waiNSFWIllustrious_v120/00004.png.txt
+## 📝 Example Metadata Output
 
-
-The content of "ImageDownloads/WebUI/cyberillustrious_v38/00001.png.txt" example:
-
-Positive prompt: High Angle (from the side) view Close shot (focus on head).  muscular female,  body blush, pale skin, long hair, black hair,  sexy,  lace trim,  teasing, beckoning,  wonder woman \(cosplay\),  dreamy,  bokeh,  depth of field,  still life,  photo \(medium\),   masterpiece, best quality, newest, sensitive, absurdres, <lora:MuscleUp-Ilustrious Edition:0.75>.
-Negative prompt: lowres, bad quality, worst quality, child, loli,  bad anatomy, deformity, extra fingers, signature, logo, username,  school,  bodybuilder,.
+00001.png.txt (from WebUI folder):
+```
+Positive prompt: High Angle (from the side) view Close shot (focus on head). muscular female, body blush, pale skin, long hair, black hair, sexy, lace trim, teasing, beckoning, wonder woman (cosplay), dreamy, bokeh, depth of field, still life, photo (medium), masterpiece, best quality, newest, sensitive, absurdres, <lora:MuscleUp-Ilustrious Edition:0.75>.
+Negative prompt: lowres, bad quality, worst quality, child, loli, bad anatomy, deformity, extra fingers, signature, logo, username, school, bodybuilder.
 Steps: 30
 Sampler: DPM++ 2M SDE
 Schedule type: Karras
@@ -76,35 +106,36 @@ ADetailer denoising strength: 0.4
 ADetailer inpaint only masked: True
 ADetailer inpaint padding: 32
 ADetailer version: 25.3.0
-Template: Freeze Frame shot.  muscular female
+Template: Freeze Frame shot. muscular female
 <lora: MuscleUp-Ilustrious Edition:0.75>
 Negative Template: lowres
 Hires Module 1: Use same choices
-Hires prompt: Freeze Frame shot.  muscular female
+Hires prompt: Freeze Frame shot. muscular female
 Hires CFG Scale: 5
 Hires upscale: 2
 Hires steps: 20
 Hires upscaler: 4x-UltraMix_Balanced
 Lora hashes: MuscleUp-Ilustrious Edition: 7437f7a09915
 Version: f2.0.1v1.10.1-previous-661-g0b261213
+```
 
------
+## ⚠️ Caveats
 
-Caveats:
+- Originally developed from a Bash v3.2 prototype.
+- Not optimized or tested across all platforms.
+- Assumes exiftool is installed and available in your system path.
 
-- This was "developed" from a Bash v3.2 script.  It has not been tested on other environments or optimised in any way
+## 🐞 Known Issues
 
+- Subfolder input handling could be improved
+- Hidden files (e.g., .DS_Store) are not ignored by default
 
------
+## 📜 Version History
 
-Known Issues:
+- 1.0 – Initial release
 
-- Better handle sub-folders as input
-- Ignore hidden files
+## 📦 Requirements
 
------
+- Python 3.x
+- exiftool (for reading image metadata)
 
-
-History:
-
-1.0: Intial release
