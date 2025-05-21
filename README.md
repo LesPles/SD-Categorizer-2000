@@ -133,6 +133,7 @@ Version: f2.0.1v1.10.1-previous-661-g0b261213
 ## 📜 Version History
 
 - 1.0 – Initial release
+- 1.1 – Fix for exif field "User Comment"
 
 ## 📦 Requirements
 
