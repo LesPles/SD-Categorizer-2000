@@ -14,7 +14,8 @@ For the WebUI categories, it supports 'Model', 'Model hash', 'Size', 'Sampler' &
 
 Usage: sd-cat2000.py -<flag> [-v] <file(s) or folder(s)>
 
-Where <flag> is ONE of the following"
+Where <flag> is ONE of the following
+
 -m Model
 -h Model hash
 -d Size
