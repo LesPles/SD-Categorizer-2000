@@ -1,4 +1,4 @@
-# SD-Cat2000
+# SD-Categorizer-2000
 
 A Python script to organize a folder containg all your images into folders and export any **Stable Diffusion** generation metadata.
 
