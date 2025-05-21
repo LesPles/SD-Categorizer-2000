@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Version 1.0
+# Version 1.1
 
 import sys
 import os
@@ -37,9 +37,11 @@ def classify_file(file_path, base_dir, category, verbose):
     prompt = run_exiftool(file_path, 'Prompt')
     comment = run_exiftool(file_path, 'Comment')
     parameters = run_exiftool(file_path, 'Parameters')
+    ucomment = run_exiftool(file_path, 'UserComment')
+
 
     # Case A: No metadata at all
-    if not prompt and not comment and not parameters:
+    if not prompt and not comment and not parameters and not ucomment:
         target_dir = os.path.join(base_dir, 'No metadata', ext)
         os.makedirs(target_dir, exist_ok=True)
         shutil.move(file_path, os.path.join(target_dir, filename))
@@ -57,7 +59,7 @@ def classify_file(file_path, base_dir, category, verbose):
         return
 
     # Case C/D: WebUI or Unknown metadata
-    metadata_source = parameters or comment
+    metadata_source = parameters or comment or ucomment
     if metadata_source:
         metadata = {}
 
