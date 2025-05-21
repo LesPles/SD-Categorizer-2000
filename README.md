@@ -1,6 +1,6 @@
 # SD-Cat2000
 
-A Python script (originally prototyped in Bash) designed to organize image dump folders and export generation parameters (metadata) from **Stable Diffusion** image files.
+A Python script to organize a folder containg all your images into folders and export any **Stable Diffusion** generation metadata.
 
 ## 📁 Folder Structure
 
