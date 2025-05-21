@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Version 1.0
+
 import sys
 import os
 import subprocess
@@ -130,7 +132,7 @@ def collect_files(paths):
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: script.py -<flag> [-v] <file(s) or folder(s)>")
+        print("Usage: sd-cat2000.py -<flag> [-v] <file(s) or folder(s)>")
         print("Supported flags:", ' '.join(FLAG_MAP.keys()))
         sys.exit(1)
 
