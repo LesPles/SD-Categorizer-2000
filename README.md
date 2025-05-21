@@ -7,7 +7,7 @@ A Python script to organize a folder containg all your images into folders and e
 The script organizes files into the following **top-level folders**:
 
 - **ComfyUI/**  
-  Files generated using **ComfyUI** (identified by metadata).
+  Files generated using **ComfyUI**.
 
 - **WebUI/**  
   Files generated using **WebUI**, organized into subfolders based on a **category of your choosing** (e.g., Model, Sampler).  
@@ -23,7 +23,7 @@ The script organizes files into the following **top-level folders**:
 
 ## 🏷 Supported WebUI Categories
 
-The following categories are supported for classifying WebUI images:
+The following categories are supported for classifying WebUI images.  
 
 - `Model`
 - `Model hash`
